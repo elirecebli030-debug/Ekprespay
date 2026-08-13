@@ -1,0 +1,32 @@
+# Xəta göstərmə
+php_flag display_errors off
+php_flag display_startup_errors off
+php_value error_reporting 0
+
+# Təhlükəsizlik başlıqları
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set Referrer-Policy "no-referrer"
+</IfModule>
+
+# İndeksləməni söndür
+Options -Indexes
+
+# HTTPS-ə yönləndir
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# PHP fayllarını gizlət
+<FilesMatch "\.(php|inc|config|json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Yalnız HTML fayllarına icazə ver
+<Files "index.html">
+    Order Allow,Deny
+    Allow from all
+</Files>
