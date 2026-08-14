@@ -1,28 +1,21 @@
-# Bütün faylları blokla
-Order Deny,Allow
-Deny from all
+# 🔥 API QOVLUĞU ÜÇÜN TAM İCAZƏ
 
-# Yalnız POST icazəsi
+# PHP fayllarına icazə ver
 <Files "telegram-handler.php">
-    <Limit POST>
-        Order Allow,Deny
-        Allow from all
-    </Limit>
+    Order Allow,Deny
+    Allow from all
 </Files>
 
-# PHP fayllarını gizlət
-<FilesMatch "\.php$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-
-# Konfiq fayllarını blokla
+# Digər faylları blokla
 <FilesMatch "\.(htaccess|htpasswd|ini|log|txt|json|xml|config)$">
     Order Deny,Allow
     Deny from all
 </FilesMatch>
 
+# Xətaları gizlət
 php_flag display_errors off
 php_flag display_startup_errors off
 php_value error_reporting 0
+
+# İndeksləməni söndür
 Options -Indexes
