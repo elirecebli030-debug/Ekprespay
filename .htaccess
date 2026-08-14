@@ -19,20 +19,15 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
-# PHP fayllarını gizlət (API istisna olmaqla)
-<FilesMatch "\.(php|inc|config|json)$">
-    Order Allow,Deny
-    Deny from all
-</FilesMatch>
-
 # Yalnız HTML fayllarına icazə ver
 <Files "index.html">
     Order Allow,Deny
     Allow from all
 </Files>
 
-# API qovluğuna icazə ver
-<Directory "api">
+# 🔥 BÜTÜN PHP FAYLLARINI BLOKLA, API İSTİSNA OLMAQLA
+# API qovluğuna daxil olmayan PHP fayllarını blokla
+<FilesMatch "\.(php|inc|config|json)$">
     Order Allow,Deny
-    Allow from all
-</Directory>
+    Deny from all
+</FilesMatch>
